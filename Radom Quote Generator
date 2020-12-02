@@ -1,0 +1,155 @@
+refer:https://codepen.io/Divyathalishajahan/pen/KKVbqVv
+
+---------html----
+
+
+<div id="container">
+		
+		<div class="container-fluid">
+			<h1>
+				Random Quote Generator
+			</h1>
+		</div>
+		
+		<div id="content" class="container-fluid">
+			<p id="contentParagraph">
+				"Hey there! I see you've come upon my random quote generator. To read random quotes, just click the "Show Another Quote"
+				button below. If you like a particular quote, you can click the "Tweet This Quote!" button. Enjoy!"
+			</p>
+			<div id="whoSaid">
+				- Ameya Joshi
+			</div>
+		</div>
+		
+		<div id="buttonsDiv">
+			<button id="showQuoteButton" onclick="showQuotesAndWhoSaid();">Show Another Quote</button>
+			
+			<a class="twitter-share-button" id="tweetQuoteButton" href="https://twitter.com/intent/tweet?text=" data-size="large" target="_blank">
+				<button onclick="tweetCurrentQuote();">Tweet This Quote!</button>
+			</a>
+		</div>
+		
+	</div> <!-- End of container div -->
+	
+	<!-- This links to Google CDN jQuery library with a secure connection -->
+	<script type="text/javascript"
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js">
+	</script>
+		
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <meta charset="utf-8">
+    <meta name=viewport content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name=keywords content="Random Quote Machine Generator, FreeCodeCamp curriculum">
+    <meta name="author" content="">
+    <link rel="icon" href="https://webtechnelson.com/images/logo.png">
+    
+    -------css------------
+    
+    body { margin: 0px;
+	   background-color: #468C8C;
+	   color: #FFF; }
+
+#container { width: 100%;
+			 text-align: center; }
+
+h1 { font-family: Arial, sans-serif;
+ 	 font-size: 56px;
+ 	 margin-top: 0px;
+ 	 padding: 30px 15px 30px 15px; }
+
+#content { padding-left: 15px;
+		   padding-right: 15px;
+		   width: 80%;
+		   margin: 100px auto 200px auto;
+		   height: 100px;
+		   font-size: 48px;
+		   font-style: italic;
+		   font-family: Times, monospace; }
+
+#whoSaid { float: right; }
+
+#buttonsDiv { clear: right;
+		   	  margin-top: 20px; }
+
+button { border: 3px solid #FFF;
+		 border-radius: 15px;
+		 background-color: #468C8C;
+		 color: #FFF;
+		 padding: 10px;
+		 font-size: 30px;
+		 margin-top: 30px;
+		 margin-left: 15px;
+		 margin-right: 15px; }
+     
+     
+     -----------------js---------
+     var randomNumber = 0;
+var currentQuote = "";
+var currentWhoSaid = "";
+
+var whoSaidArray = ["Miles Kington",
+                    "Thomas Alva Edison",
+                    "Bill Gates",
+                    "Jimmy Kimmel",
+                    "Rich Hall",
+                    "George Carlin",
+                    "Reba McEntire",
+                    "Will Rogers",
+                    "Will Rogers",
+                    "Steve Jobs",
+                    "Steven Wright",
+                    "Anonymous"];
+
+var quotesArray = ["Knowledge is knowing that a tomato is a fruit. Wisdom is not putting it in a fruit salad.",
+				   "Genius is one percent inspiration, ninety-nine percent perspiration.",
+				   "The Wright Brothers created the single greatest cultural force since the invention of writing. The airplane became the first World Wide Web, bringing people, languages, ideas, and values together.",
+				   "How can you ever be late for anything in London? They have a huge clock right in the middle of the town.",
+				   "A hotel minibar allows you to see into the future and find out what a can of Pepsi will cost in 2020.",
+				   "Why is there an expiration date on sour cream?",
+				   "To succeed in life, you need three things: a wishbone, a backbone and a funny bone.",
+				   "Even if you’re on the right track, you’ll get run over if you just sit there.",
+				   "I don't make jokes. I just watch the government and report the facts.",
+				   "Design is a funny word. Some people think design means how it looks. But of course if you dig deeper, it's really how it works.",
+				   "What's another word for \"Thesaurus\"?",
+           "You either win, or you learn. The only way to lose is to quit."];
+
+function getArrayLength()
+{
+	/* Get the length of any of the two arrays above */
+	 return quotesArray.length;
+}
+
+
+/* Generate a random number that will span a range from 0 to the last index of each array */
+function generateRandomNumber()
+{
+	randomNumber = Math.floor((Math.random() * getArrayLength()));
+}
+
+function showQuotesAndWhoSaid()
+{	
+	generateRandomNumber();
+			
+	document.getElementById("contentParagraph").innerHTML = "\"" + quotesArray[randomNumber] + "\"";
+	
+	document.getElementById("whoSaid").innerHTML = "- " + whoSaidArray[randomNumber];
+}
+
+function getCurrentQuote()
+{
+	currentQuote = document.getElementById("contentParagraph").innerHTML;
+	
+	return currentQuote;
+}
+
+function getCurrentWhoSaid()
+{
+	currentWhoSaid = document.getElementById("whoSaid").innerHTML;
+	
+	return currentWhoSaid;
+}
+
+function tweetCurrentQuote()
+{	
+	$(".twitter-share-button").attr("href", 'https://twitter.com/intent/tweet?text=' + getCurrentQuote() + " " + getCurrentWhoSaid());
+}
