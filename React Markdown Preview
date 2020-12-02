@@ -1,0 +1,120 @@
+valid to : https://codepen.io/Divyathalishajahan/pen/LYGMjpN 
+
+-------------html-----------
+
+<div class="container">
+  <div class="header">
+    <h1>Free Code Camp React Markdown Previewer</h1>
+    <p>This FCC challenge can be found <a href="https://www.freecodecamp.com/challenges/build-a-markdown-previewer">here</a>.</p>
+  </div>
+  <div id="app-target"></div>
+  <div class="footer">
+  <p>Sample markdown taken from <a href="https://guides.github.com/pdfs/markdown-cheatsheet-online.pdf">https://guides.github.com/pdfs/markdown-cheatsheet-online.pdf</a></p>
+  </div>
+</div>
+
+-------------css----------
+
+
+body {
+  background: #ccc;
+}
+
+.header {
+  text-align: center;
+  margin-top: 40px;
+}
+.app-container {
+  width: 100%;
+  height: 500px;
+}
+
+.section-header {
+  text-align: center;
+}
+
+.markdown-input {
+  display: inline-block;
+  height: 500px;
+  width: 100%
+}
+
+.results-container {
+  padding: 5%;
+  border: 1px solid #999;
+  background-color: white;
+  overflow: auto;
+  height: 500px;
+}
+
+.footer {
+  padding-top: 15px;
+  clear: both;
+  text-align: center;
+}
+
+-------------js-----------
+
+class App extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      entry: "# This is an <h1> tag\n### This is an <h3> tag\n###### This is an <h6> tag\n---\n*This text will be italic*\n\n_This will also be italic_\n\n**This text will be bold**\n\n__This will also be bold__\n\n*You **can** combine them*\n\n---\n\nAs Grace Hopper said:\n> I’ve always been more interested\n> in the future than in the past.\n---\n* Item 1\n* Item 2\n * Item 2a\n * Item 2b\n\n---\n\n1. Item 1\n2. Item 2\n3. Item 3\n  * Item 3a\n * Item 3b\n\n---\n\n![GitHub Logo](https://avatars0.githubusercontent.com/u/9892522?v=3&s=200)"
+    }
+    this.inputChange = this.inputChange.bind(this)
+  }
+  inputChange(event) {
+    this.setState({entry: event.target.value})
+  }
+  render() {
+    return (
+      <div className="app-container">
+        <InputField inputChange={this.inputChange} defaultValue={this.state.entry}/>
+        <MarkdownDisplay entry={this.state.entry}/>
+      </div>
+    )
+  }
+}
+
+class InputField extends React.Component {
+  constructor(props) {
+    super(props)
+    this.handleChange = this.handleChange.bind(this)
+  }
+  handleChange(event) {
+    this.props.inputChange(event)
+  }
+  render() {
+    return (
+      <div className="col-md-6 col-sm-12">
+        <h3 className="section-header">
+          Markdown Input
+        </h3>
+        <textarea 
+          className="markdown-input"
+          defaultValue={this.props.defaultValue}
+          onChange={this.handleChange}
+        />
+      </div>
+    )
+  }
+}
+
+class MarkdownDisplay extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+  render() {
+    return (
+      <div className="col-md-6 col-sm-12">
+        <h3 className="section-header">
+          HTML Output
+        </h3>
+        <div className="results-container" dangerouslySetInnerHTML={{__html: markdown.toHTML(this.props.entry)}}>
+        </div>
+      </div>
+    )
+  }
+}
+
+ReactDOM.render(<App/>, document.getElementById('app-target'))
